@@ -1,0 +1,6 @@
+{
+    "Driver": "postgres",
+    "User": "postgres",
+    "Name": "tododb",
+    "Passwd": "123admin"
+} 
