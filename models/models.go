@@ -53,7 +53,7 @@ func InitDB() error {
 		return err
 	}
 
-	// Creating tables in sqlite database
+	// Creating tables in database
 	file2, err := os.Open("migrations.sql")
 	if err != nil {
 		return err
