@@ -3,6 +3,7 @@ package models
 import (
 	"database/sql"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -24,6 +25,8 @@ type Todo struct {
 	Created_at   string `json:"created_at"`
 	Completed_at string `json:"completed_at"`
 }
+
+var ErrNotF error = errors.New("not found")
 
 // InitDB initialises db
 func InitDB() error {
@@ -128,7 +131,7 @@ func (td *Todo) UpdateItem(id *int) error {
 	RETURNING description, created_at`, t, *id)
 	err := row.Scan(&td.Description, &td.Created_at)
 	if err != nil {
-		return err
+		return fmt.Errorf("UpdateItem: %w", ErrNotF)
 	}
 
 	if err := row.Err(); err != nil {

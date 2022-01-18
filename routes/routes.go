@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"errors"
 	"net/http"
 	"rest/models"
 	"strconv"
@@ -52,7 +53,12 @@ func Updatelist(c *gin.Context) {
 	item := &models.Todo{}
 	item.ID = id
 	if err := item.UpdateItem(&id); err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"error": "item not found"})
+		if errors.Is(err, models.ErrNotF) {
+			c.JSON(http.StatusNotFound, gin.H{"error": "item cannot be found"})
+			return
+		}
+
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "item cannot be updated"})
 		return
 	}
 
