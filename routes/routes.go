@@ -15,7 +15,7 @@ import (
 func Getlist(c *gin.Context) {
 	tds, err := models.List()
 	if err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"error": "cannot show todo list"})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "cannot show todo list"})
 		return
 	}
 
